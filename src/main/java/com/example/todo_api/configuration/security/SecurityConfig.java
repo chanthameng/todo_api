@@ -3,6 +3,7 @@ import com.example.todo_api.configuration.jwt.JwtAuthenticationEntryPoint;
 import com.example.todo_api.configuration.jwt.JwtRequestFilter;
 import com.example.todo_api.service.user.AppUserServiceImp;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ public class SecurityConfig {
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtRequestFilter jwtAuthFilter;
     private final JwtAuthenticationEntryPoint jwtAuthEntrypoint;
+    private final CorsFilter corsFilter;
 
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -42,6 +44,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         http
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("api/todo/v1/auth/**","/v3/api-docs/**",

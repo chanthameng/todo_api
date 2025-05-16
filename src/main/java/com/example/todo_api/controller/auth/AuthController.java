@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
 @RestController
 @Controller
 @AllArgsConstructor
-@CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/todo/v1/auth")
 public class AuthController {
     private final AppUserServiceImp appUserService;

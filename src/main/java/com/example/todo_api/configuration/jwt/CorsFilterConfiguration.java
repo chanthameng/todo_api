@@ -12,6 +12,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 //@CrossOrigin
@@ -21,7 +22,8 @@ public class CorsFilterConfiguration {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.setAllowedOrigins(List.of("https://api.ksga.info"));
+//        corsConfiguration.addAllowedOrigin(String.valueOf(Collections.singletonList("https://api.ksga.info")));
         corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept",
                 "Authorization", "Access-Control-Allow-Credentials", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods",
@@ -30,6 +32,8 @@ public class CorsFilterConfiguration {
                 "Content-Range", "Content-Disposition", "Content-Description"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**",corsConfiguration);
+
+
         return new CorsFilter();
     }
 
